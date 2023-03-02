@@ -22,8 +22,3 @@ This repository contains a sample setup for using Elasticsearch with .NET applic
 8. Log in to Kibana with the default credentials (username: `elastic`, password: `strongpassword`).
 9. In Kibana, create an index pattern to start visualizing Elasticsearch data.
 10. Navigate to `http://localhost:8080/swagger/index.html` to access the .NET 6 application or `http://localhost:8081/swagger/index.html` to access the .NET 5 application.
-
-## Clean up
-
-To stop and remove the containers, run the following command in the `ElasticDemo/src` directory:
-
