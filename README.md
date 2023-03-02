@@ -12,7 +12,7 @@ This repository contains a sample setup for using Elasticsearch with .NET applic
 1. Clone this repository to your local machine: `git clone https://github.com/shukhratutaboev/ElasticDemo.git`
 2. Navigate to the `ElasticDemo` directory: `cd ElasticDemo/src`
 3. Open the `docker-compose.yml` file in a text editor and make any necessary changes.
-   - The default Elasticsearch password is `strongpassword`. If you want to change the password, modify the `ELASTIC_PASSWORD` environment variable.
+   - The default Elasticsearch password is `strongpassword`. If you want to change the password, modify the `ELASTIC_PASSWORD` and other related environment variables.
    - If you want to change the Elasticsearch and Kibana versions, modify the image tags in the `elasticsearch` and `kibana` services.
    - If you want to change the ports used by the .NET applications, modify the `ports` section for each of the `dotnet6` and `dotnet5` services.
 4. Run the Docker Compose command to start the Elasticsearch, Kibana, and .NET applications: `docker-compose up -d`
