@@ -7,7 +7,7 @@ networks:
 services:
   elasticsearch:
     container_name: es-container
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.16.1
     environment:
       - xpack.monitoring.enabled=true
       - xpack.watcher.enabled=false
@@ -25,7 +25,7 @@ services:
 
   kibana:
     container_name: kb-container
-    image: docker.elastic.co/kibana/kibana:8.6.2
+    image: docker.elastic.co/kibana/kibana:7.16.1
     environment:
       - ELASTICSEARCH_URI=http://elasticsearch:9200
       - ELASTICSEARCH_USERNAME=elastic
@@ -39,11 +39,11 @@ services:
     volumes:
       - kibana-data:/usr/share/kibana/data
 
-  test1:
+  dotnet6:
     build:
       context: ./
-      dockerfile: DockerFile.test1
-    container_name: test1-container
+      dockerfile: Dockerfile.DotNet6
+    container_name: dotnet6-container
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
@@ -52,18 +52,16 @@ services:
       - "ElasticConfiguration:Password=shukhrat1234"
     ports:
       - "8080:80"
-    volumes:
-    - static-content:/test-docker/static/
     networks:
       - es-net
     depends_on:
       - kibana
 
-  test2:
+  dotnet5:
     build:
       context: ./
-      dockerfile: DockerFile.test2
-    container_name: test2-container
+      dockerfile: Dockerfile.DotNet5
+    container_name: dotnet5-container
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:80
@@ -72,8 +70,6 @@ services:
       - "ElasticConfiguration:Password=shukhrat1234"
     ports:
       - "8081:80"
-    volumes:
-    - static-content:/test-docker/static/
     networks:
       - es-net
     depends_on:
