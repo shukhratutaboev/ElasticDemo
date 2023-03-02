@@ -14,7 +14,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - discovery.type=single-node
       - xpack.security.enabled=true
-      - ELASTIC_PASSWORD=shukhrat1234
+      - ELASTIC_PASSWORD=strongpassword
     networks:
       - es-net
     ports:
@@ -29,7 +29,7 @@ services:
     environment:
       - ELASTICSEARCH_URI=http://elasticsearch:9200
       - ELASTICSEARCH_USERNAME=elastic
-      - ELASTICSEARCH_PASSWORD=shukhrat1234
+      - ELASTICSEARCH_PASSWORD=strongpassword
     networks:
       - es-net
     depends_on:
@@ -49,7 +49,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
       - "ElasticConfiguration:Username=elastic"
-      - "ElasticConfiguration:Password=shukhrat1234"
+      - "ElasticConfiguration:Password=strongpassword"
     ports:
       - "8080:80"
     networks:
@@ -67,7 +67,7 @@ services:
       - ASPNETCORE_URLS=http://+:80
       - "ElasticConfiguration:Uri=http://elasticsearch:9200"
       - "ElasticConfiguration:Username=elastic"
-      - "ElasticConfiguration:Password=shukhrat1234"
+      - "ElasticConfiguration:Password=strongpassword"
     ports:
       - "8081:80"
     networks:
