@@ -1,0 +1,16 @@
+
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build-env
+WORKDIR /elasticdemo/DotNet5
+
+# Copy everything
+COPY . ./
+# Restore as distinct layers
+RUN dotnet restore .\\DotNet5\\DotNet5.csproj
+# Build and publish a release
+RUN dotnet publish .\\DotNet5\\DotNet5.csproj -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:5.0
+WORKDIR /elasticdemo/DotNet5
+COPY --from=build-env /elasticdemo/DotNet5/out .
+ENTRYPOINT ["dotnet", "DotNet5.dll"]

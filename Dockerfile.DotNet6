@@ -1,0 +1,16 @@
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /elasticdemo/DotNet6
+
+# Copy everything
+COPY . ./
+# Restore as distinct layers
+RUN dotnet restore .\\DotNet6\\DotNet6.csproj
+# Build and publish a release
+RUN dotnet publish .\\DotNet6\\DotNet6.csproj -c Release -o out
+
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /elasticdemo/DotNet6
+COPY --from=build-env /elasticdemo/DotNet6/out .
+ENTRYPOINT ["dotnet", "DotNet6.dll"]

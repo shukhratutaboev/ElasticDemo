@@ -1,0 +1,84 @@
+version: "3.4"
+
+networks:
+  es-net:
+    driver: bridge
+
+services:
+  elasticsearch:
+    container_name: es-container
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.2
+    environment:
+      - xpack.monitoring.enabled=true
+      - xpack.watcher.enabled=false
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - discovery.type=single-node
+      - xpack.security.enabled=true
+      - ELASTIC_PASSWORD=shukhrat1234
+    networks:
+      - es-net
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - es-data:/usr/share/elasticsearch/data  
+
+  kibana:
+    container_name: kb-container
+    image: docker.elastic.co/kibana/kibana:8.6.2
+    environment:
+      - ELASTICSEARCH_URI=http://elasticsearch:9200
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=shukhrat1234
+    networks:
+      - es-net
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    volumes:
+      - kibana-data:/usr/share/kibana/data
+
+  test1:
+    build:
+      context: ./
+      dockerfile: DockerFile.test1
+    container_name: test1-container
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - "ElasticConfiguration:Username=elastic"
+      - "ElasticConfiguration:Password=shukhrat1234"
+    ports:
+      - "8080:80"
+    volumes:
+    - static-content:/test-docker/static/
+    networks:
+      - es-net
+    depends_on:
+      - kibana
+
+  test2:
+    build:
+      context: ./
+      dockerfile: DockerFile.test2
+    container_name: test2-container
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:80
+      - "ElasticConfiguration:Uri=http://elasticsearch:9200"
+      - "ElasticConfiguration:Username=elastic"
+      - "ElasticConfiguration:Password=shukhrat1234"
+    ports:
+      - "8081:80"
+    volumes:
+    - static-content:/test-docker/static/
+    networks:
+      - es-net
+    depends_on:
+      - kibana
+
+volumes:
+  es-data:
+  kibana-data:
