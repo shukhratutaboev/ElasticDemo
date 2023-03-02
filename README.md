@@ -1,6 +1,6 @@
 # ElasticDemo
 
-This repository contains a sample setup for using Elasticsearch with .NET applications for logging. It includes a docker-compose file that spins up an Elasticsearch instance, Kibana for visualizing Elasticsearch data, and two .NET applications built with Dockerfiles for .NET 6 and .NET 5.
+This repository contains a sample setup for using Elasticsearch with .NET applications for logging. It includes a docker-compose file that spins up an Elasticsearch instance, Kibana for visualizing Elasticsearch data and two .NET applications built with Dockerfiles for .NET 6 and .NET 5.
 
 ## Prerequisites
 
